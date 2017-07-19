@@ -1,4 +1,11 @@
 from flask import Flask, render_template
+import os
+import paho.mqtt.client as mqtt
+
+client = mqtt.Client()
+client.connect("moorhouseassociates.com",1883, 60)
+
+
 
 app = Flask(__name__)
 
@@ -9,6 +16,12 @@ def index():
 @app.route('/whereami')
 def whereami():
 	return "kdua"
+
+@app.route('/btn')
+def btn():
+	print ("button clicked")
+	client.publish("test/all", "Yoo Watzup!! Buddy..")
+	return " "
 
 @app.route('/linux')
 def linux():
